@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Qualification Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            width: 400px;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ADD8E6; /* Light blue border */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        .required {
+            color: red;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"],select,
+        textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4399FF; /* Light blue background */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #367BB7; /* Darker blue on hover */
+        }
+
+        .selectedBorder{
+            border: 1px solid #4399FF;
+            
+        }
+
+        #stdRadio{
+            display: none;
+        }
+
+        #stdTeacher{
+            display: none;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="required">
+            <p>*Required</p>
+            <p>Fill the given form to prove your qualification</p>
+        </div>
+        <form action="/role" method="post">
+
+
+            <div class="" style="display: flex;">
+                <div onclick="selectRadioStudent(this)"  style="cursor: pointer;"><img src="/images/student.png" style="width: 200px;"><br><p style="text-align: center;">Student</p></div>
+                <div onclick="selectRadioTeacher(this)" style="cursor: pointer;"><img src="/images/mentor.png" style="width: 200px;" alt=""><br><p style="text-align: center;">Mentor</p></div>
+
+                <input id="stdRadio" type="radio" name="role" required value="student">
+                <input id="stdTeacher" type="radio" name="role" required value="mentor">
+
+            </div>
+
+
+
+
+            <div class="">
+                <label for="fullName">Full name*</label>
+                <input type="text" id="fullName" name="fullName" required>
+
+                <label for="subject">Subject*</label>
+                <select id="subject" name="subject" id="">
+                    <option value="" selected disabled>Select one from below</option>
+                    <option value="computer science">Computer Science</option>
+                    <option value="astro">Astronomy</option>
+                    <option value="aiml">AI/ML</option>
+                    <option value="maths">maths</option>
+                </select>
+
+                <div id="qualification-holder" class="" style="display: none;">
+                    <label for="qualification">Qualification*</label>
+                <input type="text" name="qualification" value="student" id="qualification">
+                </div>
+                <label for="reason">Reason for applying*</label>
+                <textarea id="reason" name="reason" required></textarea>
+
+                <input type="submit" value="Submit">
+            </div>
+
+        </form>
+    </div>
+</body>
+
+<script>
+    function selectRadioStudent(a){
+        document.getElementById('stdRadio').checked = true;
+        a.style.border = "1px solid #4399FF";
+        a.nextElementSibling.style.border = "none";
+        document.getElementById('qualification').value = "student";
+        document.getElementById('qualification-holder').style.display = "none";
+    }
+    function selectRadioTeacher(a){
+        document.getElementById('stdTeacher').checked = true;
+        a.style.border = "1px solid #4399FF";
+        a.previousElementSibling.style.border = "none";
+        document.getElementById('qualification').value = "";
+        document.getElementById('qualification-holder').style.display = "block";
+
+    }
+</script>
+</html>

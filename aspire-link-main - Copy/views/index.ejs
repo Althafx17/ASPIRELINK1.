@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    
+    }
+</style>
+
+<body>
+    <main>
+       <section id="home" style="margin-top: auto;margin-left: auto;margin-right: auto;" >
+        <input type="text" style="width: 800px;max-width: 800px; height: 50px;flex-grow: 0;border-radius: 50px;" placeholder="Search" onkeyup="search(this)" name="" id="search">
+        <form action="/joinRoom" method="post" style="margin-left: auto;margin-right: auto;margin-bottom: 50%;display: flex;flex-direction: column;align-items: center;">
+       
+          <select id="searchResults" style="width: 800px;height: 40px;margin-top: 1rem;"  name="search" required>
+            <option value="" >Search For Rooms</option>
+          </select>
+  
+          <button onclick="loadRoom()" style="margin-top: 2rem;background-color: #4399FF;color: white;width: 200px;height: 40px;">Search</button>  
+        </form>
+     
+       </section>
+
+       <section id="loader" style="display: none;justify-content: center;align-items: center;height: 100%;border-radius: 100px;">
+
+        <div class="pov-s">
+            <div class="loading"></div>
+            <div class="">Searching for mentor...</div>
+            <div class="">Mentor Available 4/15</div>
+        </div>
+
+        <div class="pov-m">
+            <div class="loading"></div>
+            <div class="">Searching for student...</div>
+            <div class="">Students Available 4/15</div>
+        </div>
+       </section>
+
+    </main>
+    <script>
+        function search(e){
+
+            console.log(e.value)
+    const searchResults = document.getElementById('searchResults') ;
+    const searchText = document.getElementById('search')
+    let match = e.value.match(/^[a-zA-Z ]*/);
+    let match2 = e.value.match(/\s*/);
+    if(match2[0] === e.value){
+      searchResults.innerHTML ='';
+      return
+    }
+    if(match[0] === e.value){
+      fetch('/getRoom', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({payload:e.value})
+    }).then( res => res.json()).then(data => {
+      let payload = data.payload;
+      searchResults.innerHTML ='<option type="button" disabled hidden>Rooms found</option>';
+      if(payload.length < 1){
+        searchResults.innerHTML = `<p> None Found</p>`;
+        return;
+      }
+      
+      payload.forEach((item, index)=>{
+        if(index > 0) searchResults.innerHTML += '<hr>';
+        searchResults.innerHTML += `<option type="button" >${item.roomtype}</option>`;
+       
+      });
+      
+    });
+    return;
+    }
+    searchResults.innerHTML = '';
+
+  }
+  
+      function  loadRoom(e){
+        e.preventDefault();
+
+        if(document.getElementById('searchResults').value === ''){
+          alert('Please search and select a room');
+        }
+        else{
+        document.getElementById('home').style.display = 'none';
+        document.getElementById('loader').style.display = 'flex';
+
+        document.cookie = `room=${document.getElementById('searchResults').value}`;
+
+        setTimeout(()=>{
+          e.submit();
+        }, 3000);
+
+      
+        }
+      }
+
+    </script>
+</body>
+
+</html>
