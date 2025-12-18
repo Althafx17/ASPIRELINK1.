@@ -149,10 +149,10 @@ aspire-link-main/
 
 👤 **Authors**
 
-* **Saifulla** (AWH21CS043)
-* **Muhammad Abdul Razak A M** (AWH21CS026)
-* **Muhammed Nihad T** (AWH2CS029)
-* **Althaf K** (AWH21CS008)
+* **Saifulla** 
+* **Muhammad Abdul Razak A M** 
+* **Muhammed Nihad T** 
+* **Althaf K** 
 
 📄 **License**
 This project is developed for academic purposes as part of the KTU B.Tech curriculum.
